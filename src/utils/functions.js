@@ -108,6 +108,12 @@ module.exports = client => {
     else return;
   };
 
+  client.createSysXP = async (profile) => {
+
+    let newProfile = await new SysXPSchema(profile);
+    return newProfile.save()
+  };
+
   client.updateSysXP = async (guild, data) => {
     let profile = await client.getSysXp(guild);
 

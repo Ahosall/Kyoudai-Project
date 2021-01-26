@@ -9,4 +9,4 @@ const SysXPSchema = new mongoose.Schema({
   users: Array
 })
 
-module.exports = mongoose.model('SysXP', SysXPSchema)
+module.exports = mongoose.model('SysXP', SysXPSchema);

@@ -22,7 +22,10 @@ module.exports = {
       .setFooter(`Sua posição no rank é #${place}`, message.author.displayAvatarURL({ format: 'png' }))
 
     for (let i in resp) {
-      embed.fields.push({ name: `**[${resp[i].rank}]** \`${client.users.cache.get(resp[i].id).username}\``, value: `Level: \`${resp[i].level}\` [\`${resp[i].xp}/${resp[i].requiredXP}\`]` })
+      embed.fields.push({ 
+        name: `**[${resp[i].rank}]** \`${client.users.cache.get(resp[i].id).username}\``, 
+        value: `Level: \`${resp[i].level}\` [\`${resp[i].xp}/${resp[i].requiredXP}\`]` 
+      });
     } 
     
     message.channel.send({ embed: embed });
