@@ -18,7 +18,7 @@ $ npm install
 ## Ativação
 
 Primeiramente você terá que adicionar algumas coisas antes de ativar. 
-Crie um arquivo chamado `.env`, copie e cole os campos que estão dentro do `.env.example` no `.env.example`,
+Crie um arquivo chamado `.env`, copie e cole os campos que estão dentro do `.env.example` no `.env`,
 
 |       Campo        |Requer|
 |:------------------:|:----:|
