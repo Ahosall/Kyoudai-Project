@@ -21,7 +21,7 @@ Primeiramente você terá que adicionar algumas coisas antes de ativar.
 Crie um arquivo chamado `.env`, copie e cole os campos que estão dentro do `.env.example` no `.env.example`,
 
 |       Campo        |Requer|
-|-------------------:|:-----|
+|:------------------:|:----:|
 | AUTH_TOKEN=        |  Sim |
 | WEB_CLIENT_ID=     |  Sim |
 | WEB_CLIENT_SECRET= |  Sim |
