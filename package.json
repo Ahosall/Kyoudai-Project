@@ -1,0 +1,25 @@
+{
+  "name": "Kyoudai",
+  "version": "21.1.26",
+  "description": "One simple bot for discord. With Dashboard.",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "nodemon src/app.js",
+    "test": "node src/test.js"
+  },
+  "author": "Feh's",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "discord.js": "^12.5.1",
+    "enmap": "^5.8.2",
+    "moment": "^2.29.1",
+    "mongoose": "^5.11.4",
+    "node-os-utils": "^1.3.2",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.6"
+  }
+}
