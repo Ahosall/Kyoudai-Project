@@ -6,7 +6,7 @@ const Discord   = require('discord.js');
 const mongoose  =   require('mongoose');
 const Enmap     =      require('enmap');
 const chalk     =      require('chalk');
-const { join }  =       require('path');
+const { join }  = 	require('path');
 
 const { readdirSync } = require('fs');
 
@@ -18,7 +18,7 @@ const client = new Discord.Client({
 client.commands = new Enmap()
 client.startTime = Date.now()
 
-const db = require('./utils/database')(process.env.MONGO_URI);
+const db = require('./utils/database');
 
 require("./utils/functions")(client);
 
@@ -85,4 +85,4 @@ console.log(`\nAll events have been ${chalk.green('LOADED')}!`);
 db.then(() => console.log(`\n[ ${chalk.green('OK')} ] Connected to MongoDB`))
   .catch((err) => { console.log(`| ${chalk.red('ERR')} |`, err) });
 
-client.login(process.env.AUTH_TOKEN)
+client.login(process.env.AUTH_TOKEN_TEST)

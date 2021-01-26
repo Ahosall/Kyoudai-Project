@@ -27,7 +27,7 @@ module.exports = async (client, message) => {
         db.user    =  await client.getUser(message.author);
         db.sysXP   =  await client.getSysXp(message.guild);
 
-				db.sysXPSchema   =  SysXPSchema
+		db.sysXPSchema   =  SysXPSchema
         db.guildSchema   =  GuildSchema
         db.userSchema    =  UserSchema
         db.memberSchema  =  MemberSchema
@@ -102,70 +102,71 @@ module.exports = async (client, message) => {
 	if (db.guild.config.sysXP.enabled != false) {
 		let level, xp, users;
 
-		users = db.sysXP.users;
+		if (db.sysXP) {
+			users = db.sysXP.users;
 		
-		for (let i in users) {
+			for (let i in users) {
 
-			if (users[i].id == message.author.id) {
-				level = users[i].level
-				xp = users[i].xp
-				requiredXP = users[i].requiredXP
+				if (users[i].id == message.author.id) {
+					level = users[i].level
+					xp = users[i].xp
+					requiredXP = users[i].requiredXP
 
-				if (xp >= requiredXP) {
-					console.log(level);
-					let channelLevelUp = db.guild.config.channels.levelUp;
-					let sysXPConfig = db.guild.config.sysXP;
+					if (xp >= requiredXP) {
+						console.log(level);
+						let channelLevelUp = db.guild.config.channels.levelUp;
+						let sysXPConfig = db.guild.config.sysXP;
 
-					level++
+						level++
 
-					client.updateSysXP(message.guild, message.author, {
-						level: level,
-						requiredXP: requiredXP
-					})
+						client.updateSysXP(message.guild, message.author, {
+							level: level,
+							requiredXP: requiredXP
+						})
 
-					if (channelLevelUp.enabled == true) {
-						let id = channelLevelUp.id;
-						channel = message.guild.channels.cache.get(id);
+						if (channelLevelUp.enabled == true) {
+							let id = channelLevelUp.id;
+							channel = message.guild.channels.cache.get(id);
 
-						if (sysXPConfig.message.enabled == true) {
-							channel.send(sysXPConfig.message.text);
-						} else {
-							channel.send(`Parabéns ${message.author} você subiu para o level **${level}**! \`${xp}/{${requiredXP}}\``);
+							if (sysXPConfig.message.enabled == true) {
+								channel.send(sysXPConfig.message.text);
+							} else {
+								channel.send(`Parabéns ${message.author} você subiu para o level **${level}**! \`${xp}/{${requiredXP}}\``);
+							}
+						}
+					} else {
+						console.log(users[i]);
+						
+						let data = users;
+
+						for (let i in await data) {
+							if (data[i].id == users[i].id) {
+								data[i].xp = xp + 1;
+								
+								console.log(data)
+							}
 						}
 					}
-				} else {
-					console.log(users[i]);
-					
-					let data = users;
-
-					for (let i in await data) {
-						if (data[i].id == users[i].id) {
-							data[i].xp = xp + 1;
-							
-							console.log(data)
-						}
-					}
-
-
-					/*client.updateSysXP(message.guild, message.author, {
-						xp: xp
-					})*/
-
-					/*client.updateSysXP(message.guild, { 
-						$set: {
-							'users': users[i]
-						}
-					});*/
 				}
 			}
+		} else {
+			client.createSysXP({
+				guildId: message.guild.id,
+				users: [{
+					id: message.author.id,
+					level: 1,
+					xp: 0,
+					requiredXP: 0
+				}]
+			})
 		}
 	}
 
-  let prefix;
+  	let prefix;
 	try {
 		prefix = db.guild.get('prefix');
 	} catch(e) {
-		prefix = 'r!';
+		prefix = 'k!';
 	}
 
 	if (message.content == '<@!' + client.user.id + '>') {
@@ -184,7 +185,7 @@ module.exports = async (client, message) => {
 
   if (!cmd) return
 	
-	// if (message.author.id != 683703998729027769 ) return message.reply('Em fase de desenvolvimento.').then((msg) => { msg.delete({ timeout: 5000 }) });
+  if (message.author.id != 683703998729027769 ) return message.reply('Em fase de desenvolvimento.').then((msg) => { msg.delete({ timeout: 5000 }) });
 
   let cmds = db.member.cmdsExecutados;
 

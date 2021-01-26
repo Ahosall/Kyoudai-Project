@@ -30,7 +30,7 @@ const MemberSchema = new mongoose.Schema({
         requiredXP: {
           type: Number,
           default: 0
-        },
+        }
       },
       guild: {
         type: Array

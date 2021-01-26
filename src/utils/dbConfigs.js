@@ -1,21 +1,27 @@
+/* Configurações padrões para quando o bot entrar em um servidor */
+
 module.exports = {
-  defaultGuild: {
-  	config: {
-  		sysXP: {
-	      enabled: false
-	    },
+	defaultGuild: {
+		config: {
+			sysXP: {
+				enabled: false
+			},
 			channels: {
-		    welcome: {
-			  	enabled: false,
-			  	channel: '123456',
-			  	embed: {
+				welcome: {
+					enabled: false,
+					channel: '123456789123456789',
+					message: {
 						enabled: false,
-						title:  '',
+						value: ''
+					},
+					embed: {
+						enabled: false,
+						title: '',
 						description: '',
-						footer:{
+						footer: {
 							enabled: false,
-							footerImage: '{user.avatar}',
-							footerMessage: '{user.tag}'
+							footerImage:  '{user.avatar}',
+							footerText: '{user.tag}'
 						},
 						thumbnail: {
 							enabled: false,
@@ -23,30 +29,30 @@ module.exports = {
 						},
 						author: {
 							enabled: false,
-							authorImage: '{user.avatar}',
-							authorMessage: '{user.tag}'
+							authorMessage: '{user.avatar}',
+							authorImage: '{user.tag}'
 						},
 						image: {
 							enabled: false,
 							image: '{user.avatar}'
 						}
-        	},
-					message: {
-						enabled: false,
-						text: 'Bem vindo {user}, ao {guild.name}!'
 					}
-			  },
-			  leave: {
-			  	enabled: false,
-			  	channel: '123456',
-			  	embed: {
+				},
+				leave: {
+					enabled: false,
+					channel: '123456789123456789',
+					message: {
 						enabled: false,
-						title:  '',
+						value: ''
+					},
+					embed: {
+						enabled: false,
+						title: '',
 						description: '',
-						footer:{
+						footer: {
 							enabled: false,
-							footerImage: '{user.avatar}',
-							footerMessage: '{user.tag}'
+							footerImage:  '{user.avatar}',
+							footerText: '{user.tag}'
 						},
 						thumbnail: {
 							enabled: false,
@@ -54,37 +60,33 @@ module.exports = {
 						},
 						author: {
 							enabled: false,
-							authorImage: '{user.avatar}',
-							authorMessage: '{user.tag}'
+							authorMessage: '{user.avatar}',
+							authorImage: '{user.tag}'
 						},
 						image: {
 							enabled: false,
 							image: '{user.avatar}'
 						}
-        	},
-					message: {
-						enabled: false,
-						text: 'Ateh mais {user.tag} ({user.id}) .. **,_,**'
 					}
 				},
 				logs: {
-				  enabled: false,
-				  channel: '123456'
-				},
-				punishment: {
 					enabled: false,
-					channel: '123456',
+					channel: '123456789123456789'
+				},
+				punishment:  {
+					enabled: false,
+					channel: '123456789123456789',
 					ban: {
 						message: 'Mensagem de ban.'
 					},
 					mute: {
 						message: 'Mensagem de mute.'
-					}, 
+					},
 					warn: {
-						message: 'Mensagem de alerta.'
+						message: 'Mensagem de warn.'
 					}
 				}
 			}
 		}
-  } //configurações padrões pra quando criamos um servidor no mongo
+	}
 }
