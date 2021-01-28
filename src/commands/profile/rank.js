@@ -38,8 +38,8 @@ module.exports = {
     return {
       name: "rank",
       category: "Profile",
-      description: "Use este comando serve para ver o rank de todos os usuários, do seu servidor! Use `rank geral|all` para ver o rank de todos os membros que está no meu banco de dados",
-      usage: "rank [geral|all|my(Em dev)]"
+      description: "Use este comando para ver o rank de todos os membros do seu servidor!\n Use `rank geral|all` para ver o rank de todos os usuários que está no meu banco de dados",
+      usage: "rank [geral|all|my](Em dev)"
     };
   }
 };
