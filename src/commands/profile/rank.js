@@ -1,11 +1,7 @@
 const Discord = require('discord.js');
 
-const SysXPSchema = require('../../models/sysxp');
-const MemberSchema = require('../../models/members');
-
 module.exports = {
   run: async (client, message, args, db) => {
-    if (message.author.id != 683703998729027769) return message.reply('Em desenvolvimento ...');
 
     let resp = await db.members.sort(function(a,b) {
       return a.xpTotal > b.xpTotal ? -1 : a.xpTotal < b.xpTotal ? 1 : 0;
@@ -18,18 +14,15 @@ module.exports = {
       .setTimestamp()
       .setThumbnail(message.guild.iconURL({ format: 'png', dynamic: true }))
       .setAuthor(`RANK | ${message.guild.name}`, client.user.displayAvatarURL({ format: "png" }))
-      .addFields([])
-      
+      .addFields([])      
 
     for (let i in resp) {
       let position = i
 
       embed.fields.push({ 
         name: `**[${++position}]** \`${client.users.cache.get(resp[i].id).username}\``, 
-        value: `Level: \`${resp[i].level}\`\nXP: \`${resp[i].xp}/${resp[i].requiredXP}\`\n XP Total: ${resp[i].xpTotal}` 
+        value: `Level: \`${resp[i].level}\`\nXP: \`${resp[i].xp}/${resp[i].requiredXP}\`\n XP Total: \`${resp[i].xpTotal}\`` 
       });
-
-      console.log(resp[i])
 
       if (resp[i].id == message.author.id) {
         place = position;
