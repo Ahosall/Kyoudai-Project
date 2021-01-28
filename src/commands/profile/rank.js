@@ -7,11 +7,11 @@ module.exports = {
   run: async (client, message, args, db) => {
     if (message.author.id != 683703998729027769) return message.reply('Em desenvolvimento ...');
 
-    let resp = await db.sysXP.users.sort(function(a,b) {
-      return a.xp > b.xp ? -1 : a.xp < b.xp ? 1 : 0;
+    let resp = await db.members.sort(function(a,b) {
+      return a.xpTotal > b.xpTotal ? -1 : a.xpTotal < b.xpTotal ? 1 : 0;
     });
     
-    let place = "em desenvolvimento"
+    let place;
 
     let embed = new Discord.MessageEmbed()
       .setColor('RANDOM')
@@ -19,65 +19,26 @@ module.exports = {
       .setThumbnail(message.guild.iconURL({ format: 'png', dynamic: true }))
       .setAuthor(`RANK | ${message.guild.name}`, client.user.displayAvatarURL({ format: "png" }))
       .addFields([])
-      .setFooter(`Sua posição no rank é #${place}`, message.author.displayAvatarURL({ format: 'png' }))
+      
 
     for (let i in resp) {
+      let position = i
+
       embed.fields.push({ 
-        name: `**[${resp[i].rank}]** \`${client.users.cache.get(resp[i].id).username}\``, 
-        value: `Level: \`${resp[i].level}\` [\`${resp[i].xp}/${resp[i].requiredXP}\`]` 
+        name: `**[${++position}]** \`${client.users.cache.get(resp[i].id).username}\``, 
+        value: `Level: \`${resp[i].level}\`\nXP: \`${resp[i].xp}/${resp[i].requiredXP}\`\n XP Total: ${resp[i].xpTotal}` 
       });
-    } 
+
+      console.log(resp[i])
+
+      if (resp[i].id == message.author.id) {
+        place = position;
+      } 
+    }
+
+    embed.setFooter(`Sua posição no rank é #${place}`, message.author.displayAvatarURL({ format: 'png' }))
     
     message.channel.send({ embed: embed });
-/*
-      let user = message.author;
-      let guild = message.guild;
-      
-      let embed = new Discord.MessageEmbed()
-        .setColor('RANDOM')
-        .setTimestamp();
-      
-      embed.setAuthor("LEADERBOARD | " + guild.name, guild.iconURL);
-      
-      let place;
-      
-      resp.length = 10;
-      let xp, level;
-      
-      let a = 1;
-      for (var i in resp) {
-        let name;
-
-        try {
-          name = await client.users.cache.get(resp[i].id).username;
-        } catch (e) {
-          name = `${id}`;
-        }
-
-        let level, xp, requiredXP;
-
-        resp[i].sysXP.guild.forEach(g => {
-          if (g.id == message.guild.id) {
-            level = g.level
-            xp = g.xp
-            requiredXP = g.requiredXP
-          }
-        })
-
-        embed.addField(`[${a}] ${name}`, `Level: ${level} [${xp}/${requiredXP}]`, false);
-        if (resp[i].id == message.author.id) {
-          place = a
-        }
-        a++;
-      }
-      
-      embed.setDescription(`:clipboard: Top 10`);
-      
-      embed.setFooter(`O teu lugar no rank é #${place}`, user.displayAvatarURL({ format: 'png' }));
-      
-      //embed.setThumbnail(message.guild.iconURL);
-      //*/
-      //message.channel.send('Enviado no terminal...').then( msg => msg.delete({timeout: 3000}));
   },
   conf: {},
   get help() {
