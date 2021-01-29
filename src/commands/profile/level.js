@@ -5,30 +5,43 @@ const MemberSchema = require('../../models/members');
 
 module.exports = {
   run: async (client, message, args, db) => {
-  	let userData = {};
-  	
-  	await db.member.sysXP.guild.forEach(g => {
-  		if (g.id == message.guild.id) {
-  			userData.level = g.level
-  			userData.xp = g.xp
-  			userData.requiredXP = g.requiredXP
-  		}
-  	})
-    
+  	let mentionedMember;
+
+    if(args[0]) {
+      if(message.mentions.members.first()) {
+        mentionedMember = message.mentions.members.first()
+      } else {
+        mentionedMember = await client.checkUserID(message, args[0]);
+        if (mentionedMember == 404 || mentionedMember == 201) return
+      }
+    } else {
+      mentionedMember = message.member;
+    }
+
+    let user = await client.getMember(mentionedMember);
+
+    if (!user) return message.channel.send('Este usuário não está registrado no meu banco de dados.')
     const rank = new canvacord.Rank()
-	    .setAvatar(message.author.displayAvatarURL({ format: 'png' }))
-	    .setCurrentXP(userData.xp)
-	    .setRequiredXP(userData.requiredXP)
-	    .setLevel(userData.level)
-	    .setRank(NaN)
-	    .setProgressBar(["#000000", "#FFFF00"], "GRADIENT")
-	    .setUsername(message.author.username)
-	    .setDiscriminator(message.author.discriminator);
+	    .setAvatar(mentionedMember.user.displayAvatarURL({ format: 'png' }))
+
+	    .setCurrentXP(10)
+	    .setRequiredXP(10)
+	    
+      .setLevel(user.level)
+      .setRank(user.rank)
+	    
+      /*
+        As cores foram escolhidas pelo meu amigo Moe(se quiserem o contato soh chamar no meu DC).
+      */
+      .setProgressBar(["#69ebfa", "#68ff54"], "GRADIENT")
+	    
+      .setUsername(mentionedMember.user.username)
+	    .setDiscriminator(mentionedMember.user.discriminator);
 
 		rank.build()
 	    .then(data => {
-	        const attachment = new Discord.MessageAttachment(data, "RankCard.png");
-	        message.channel.send(attachment);
+        const attachment = new Discord.MessageAttachment(data, "RankCard.png");
+        message.channel.send(attachment);
 	  });
   },
   conf: {},
