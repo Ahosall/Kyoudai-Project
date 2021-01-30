@@ -1,6 +1,11 @@
-# Kyoudai - BOT
-
-Um simples bot com muitas funções desde fun, a moderação ...
+<center>
+  <!--img src="./src/utils/kyoudaiLogo.png" alt="Kyoudai_Logo" /-->
+  # Kyoudai - BOT
+  <a href="" alt="Servidor Kyoudai">
+    <img src="https://img.shields.io/discord/308323056592486420?logo=discord" alt="chat on Discord">
+  </a>
+  Um simples bot com muitas funções desde fun, a moderação ...
+</center>
 
 ## Tecnologias
 
