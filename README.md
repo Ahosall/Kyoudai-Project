@@ -1,11 +1,12 @@
 <center>
   <!--<img src="./src/utils/kyoudaiLogo.png" alt="Kyoudai_Logo" />-->
   <h1>Kyoudai - BOT</h1>
-  <hr>
+  
   <a href="" alt="Servidor Kyoudai">
     <img src="https://img.shields.io/discord/308323056592486420?logo=discord" alt="chat on Discord">
   </a>
-  Um simples bot com muitas funções desde fun, a moderação ...
+  <br>
+  <p>Um simples bot com muitas funções desde fun, a moderação ...</p>
 </center>
 
 ## Tecnologias
