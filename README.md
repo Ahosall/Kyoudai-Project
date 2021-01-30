@@ -111,7 +111,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 Este projeto esta sobre a licença [MIT](https://www.github.com/ahosall/kyoudai-project/blob/main/LICENSE).
 
 
-Feito por Feh's 👋⬜ Entre em contato!
+Feito por Feh's 👋 Entre em contato!
 
 <p>
 	<img src="https://img.shields.io/static/v1?label=Discord&message=Feh's%235060&style=for-the-badge&color=blue&logo=discord" alt="Feh's Discord Tag"/>
