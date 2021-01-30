@@ -8,7 +8,6 @@ const osu   =  require('node-os-utils');
 const UserSchema     =  require('../models/users')
 const MemberSchema   =  require('../models/members')
 const GuildSchema    =  require('../models/guilds')
-const SysXPSchema    =  require('../models/sysxp');
 
 
 module.exports = async (client, message) => {
@@ -25,12 +24,12 @@ module.exports = async (client, message) => {
         db.guild   =  await client.getGuild(message.guild);
         db.member  =  await client.getMember(message.guild.members.cache.find(m => m.id == message.author.id).user);
         db.user    =  await client.getUser(message.author);
-        db.sysXP   =  await client.getSysXp(message.guild);
 
-		db.sysXPSchema   =  SysXPSchema
         db.guildSchema   =  GuildSchema
         db.userSchema    =  UserSchema
-        db.memberSchema  =  MemberSchema
+				db.memberSchema  =  MemberSchema
+		
+				db.members = await client.getMembers()
 
   /**
     * Se por a caso o bot for adicionado em um servidor enquanto ele estiver off
@@ -54,19 +53,72 @@ module.exports = async (client, message) => {
 	      })
 	    }, 1000)
 	  })
-	} 
+	} else {
+		/*
+		 * Sistema de XP
+		 */
+		if (db.guild.config.sysXP.enabled) {
+			let level, xp, requiredXP, user;
+
+			if (db.member) {
+				level      =      db.member.level;
+				xp         =         db.member.xp;
+				xpTotal    =    db.member.xpTotal;
+				requiredXP = db.member.requiredXP;
+				user       = message.guild.members.cache.find(m => m.id == message.author.id).user;
+
+				let channelLevelUp = db.guild.config.channels.levelUp;
+
+				if (xp >= requiredXP) {
+					await client.updateMember(user, { 
+						level: ++level,
+						xp: 0,
+						requiredXP: 2*requiredXP
+					});
+					
+
+					if (channelLevelUp.enabled) {
+						let id = channelLevelUp.id;
+						channel = message.guild.channels.cache.get(id);
+
+						// if (sysXPConfig.message.enabled == true) {
+						// 	channel.send(sysXPConfig.message.text);
+						// } else {
+							channel.send(`Parabéns ${message.author} você subiu para o level **${level}**! \`${xp}/${requiredXP}|${xpTotal}\``)
+						// }
+					} else {
+						message.channel.send(`Parabéns ${message.author} você subiu para o level **${level}**! \`${xp}/${requiredXP}|${xpTotal}\``)
+					}
+				} else {
+					await client.updateMember(user, {
+						xp: ++xp,
+						xpTotal: ++xpTotal
+					});
+				}
+			}
+
+			let resp = await db.members.sort(function(a,b) {
+	      return a.xpTotal > b.xpTotal ? -1 : a.xpTotal < b.xpTotal ? 1 : 0;
+	    });
+
+	    for (let i in resp) {
+	    	let position = i;
+	    	let users = message.guild.members.cache.find(m => m.id == resp[i].id).user;
+
+        await client.updateMember(users, {
+					rank: ++position
+				});
+			}
+		}
+	}
 
 	if(!db.member) {
 	  let msg = await message.channel.send('**Registrando usuário ...**')
 	  
 	  const newProfile = await client.createMember({
-	      id: message.author.id,
-	      guild: [{
-	      	id: message.guild.id,
-	      	level: 1,
-					xp: 0,
-					requiredXP: 0
-	      }]
+		  id: message.author.id,
+		  rank: 0,
+		  requiredXP: 10
 	    }).then(async () => {
 	      if (!db.user) {
 	      	client.createUser({
@@ -96,73 +148,8 @@ module.exports = async (client, message) => {
 	  })
 	}
 
-	/**
-	  * Sistema de XP
-	  */
-	if (db.guild.config.sysXP.enabled != false) {
-		let level, xp, users;
+  let prefix;
 
-		if (db.sysXP) {
-			users = db.sysXP.users;
-		
-			for (let i in users) {
-
-				if (users[i].id == message.author.id) {
-					level = users[i].level
-					xp = users[i].xp
-					requiredXP = users[i].requiredXP
-
-					if (xp >= requiredXP) {
-						console.log(level);
-						let channelLevelUp = db.guild.config.channels.levelUp;
-						let sysXPConfig = db.guild.config.sysXP;
-
-						level++
-
-						client.updateSysXP(message.guild, message.author, {
-							level: level,
-							requiredXP: requiredXP
-						})
-
-						if (channelLevelUp.enabled == true) {
-							let id = channelLevelUp.id;
-							channel = message.guild.channels.cache.get(id);
-
-							if (sysXPConfig.message.enabled == true) {
-								channel.send(sysXPConfig.message.text);
-							} else {
-								channel.send(`Parabéns ${message.author} você subiu para o level **${level}**! \`${xp}/{${requiredXP}}\``);
-							}
-						}
-					} else {
-						console.log(users[i]);
-						
-						let data = users;
-
-						for (let i in await data) {
-							if (data[i].id == users[i].id) {
-								data[i].xp = xp + 1;
-								
-								console.log(data)
-							}
-						}
-					}
-				}
-			}
-		} else {
-			client.createSysXP({
-				guildId: message.guild.id,
-				users: [{
-					id: message.author.id,
-					level: 1,
-					xp: 0,
-					requiredXP: 0
-				}]
-			})
-		}
-	}
-
-  	let prefix;
 	try {
 		prefix = db.guild.get('prefix');
 	} catch(e) {
