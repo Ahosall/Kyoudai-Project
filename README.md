@@ -3,7 +3,7 @@
   <h1>Kyoudai - BOT</h1>
   
   <a href="" alt="Servidor Kyoudai">
-    <img src="https://img.shields.io/discord/759096795258945565?logo=discord" alt="Servidor Kyoudai Discord">
+    <img src="https://img.shields.io/discord/759096794897711125?logo=discord" alt="Servidor Kyoudai Discord">
   </a>
   <br>
   <p>Um simples bot com muitas funções desde fun, a moderação ...</p>
