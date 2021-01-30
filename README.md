@@ -21,7 +21,7 @@
     <img src="https://img.shields.io/static/v1?label=NPM&message=6.13.4&color=red&logo=npm"/>
   </a>
   <a title="License MIT">
-  	<img src="https://img.shields.io/github/license/Ahosall/Kyoudai-project">
+  	<img src="https://img.shields.io/github/license/Ahosall/Kyoudai-Project">
   </a>
 </p>
 
