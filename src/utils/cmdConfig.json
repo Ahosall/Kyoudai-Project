@@ -1,0 +1,12 @@
+{
+	"fields": [
+		{
+			"name": "Prefix",
+			"value": "`descrição`: Com esta opção você poderá mudar o meu prefixo no seu servidor."
+		},
+		{
+			"name": "LogChannel",
+			"value": "`descrição`: Com esta opção você poderá setar/atualizar o canal de Logs."
+		}
+	]
+}

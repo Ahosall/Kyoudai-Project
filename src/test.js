@@ -6,7 +6,7 @@ const Discord   = require('discord.js');
 const mongoose  =   require('mongoose');
 const Enmap     =      require('enmap');
 const chalk     =      require('chalk');
-const { join }  = 	require('path');
+const { join }  =     	require('path');
 
 const { readdirSync } = require('fs');
 
@@ -28,6 +28,8 @@ module.exports = client
 
 console.log(`[${chalk.yellow('Starting')}] Bot!`)
 
+console.log(`\n[${chalk.yellow('Loading')}] Commands!\n`)
+
 // Load commands
 readdirSync(join(__dirname, "commands")).forEach(dir => {
     const commands = readdirSync(`./src/commands/${dir}/`).filter(file => file.endsWith(".js"));
@@ -36,17 +38,15 @@ readdirSync(join(__dirname, "commands")).forEach(dir => {
 	  try {
 	    const props = require(`./commands/${dir}/${f}`)
 
-	    if (dir == 'admin') {
-	    	console.log(`\n[${chalk.yellow('LOADING')}] ${commands.length} administration commands.\n`)
-    	} else if (dir == 'info') {
-    		console.log(`\n[${chalk.yellow('LOADING')}] ${commands.length} info commands.\n`)
-    	} else if (dir == 'profile') {
-    		console.log(`\n[${chalk.yellow('LOADING')}] ${commands.length} profile commands.\n`)
+	    if (dir == 'admin') {	    	
+        console.log('#', props.help.name, `[${chalk.green('status: Ok')}] · ${dir}`)
+    	} else if (dir == 'info') {    		
+        console.log('#', props.help.name, `[${chalk.green('status: Ok')}] · ${dir}`)
+    	} else if (dir == 'profile') {    		
+        console.log('#', props.help.name, `[${chalk.green('status: Ok')}] · ${dir}`)
     	} else if (dir == 'utils') {
-    		console.log(`\n[${chalk.yellow('LOADING')}] ${commands.length} utils commands.\n`)
+        console.log('#', props.help.name, `[${chalk.green('status: Ok')}] · ${dir}`)
     	}
-
-	    console.log('#', props.help.name, `[${chalk.green('status: Ok')}]`)
 
 	    if (props.init) props.init(client)
 
@@ -82,7 +82,13 @@ readdirSync('./src/events/').forEach(f => {
 
 console.log(`\nAll events have been ${chalk.green('LOADED')}!`);
 
-db.then(() => console.log(`\n[ ${chalk.green('OK')} ] Connected to MongoDB`))
+db.start('DEV').then(() => console.log(`\n[ ${chalk.green('OK')} ] Connected to MongoDB in DEV`))
   .catch((err) => { console.log(`| ${chalk.red('ERR')} |`, err) });
+ 
+try {
+  require('./dashboard/utils/server');
+} catch (err) {
+  console.log(`| ${chalk.red('ERR')} |`, err)
+}
 
 client.login(process.env.AUTH_TOKEN_TEST)

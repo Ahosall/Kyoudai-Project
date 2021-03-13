@@ -22,7 +22,7 @@ module.exports = async (client, message) => {
 
   const db         =  mongoose
         db.guild   =  await client.getGuild(message.guild);
-        db.member  =  await client.getMember(message.guild.members.cache.find(m => m.id == message.author.id).user);
+        db.member  =  await client.getMember(message.member.user);
         db.user    =  await client.getUser(message.author);
 
         db.guildSchema   =  GuildSchema
@@ -58,56 +58,63 @@ module.exports = async (client, message) => {
 		 * Sistema de XP
 		 */
 		if (db.guild.config.sysXP.enabled) {
+			const cooldown = new Set()
+			
 			let level, xp, requiredXP, user;
 
-			if (db.member) {
-				level      =      db.member.level;
-				xp         =         db.member.xp;
-				xpTotal    =    db.member.xpTotal;
-				requiredXP = db.member.requiredXP;
-				user       = message.guild.members.cache.find(m => m.id == message.author.id).user;
+			if (!cooldown.has(message.author.id)) {
+				if (db.member) {
+					level      =      db.member.level;
+					xp         =         db.member.xp;
+					xpTotal    =    db.member.xpTotal;
+					requiredXP = db.member.requiredXP;
+					user       = 	message.member.user;
 
-				let channelLevelUp = db.guild.config.channels.levelUp;
+					let config  = db.guild.config.channels;
+					    levelUp = config.levelUp
 
-				if (xp >= requiredXP) {
-					await client.updateMember(user, { 
-						level: ++level,
-						xp: 0,
-						requiredXP: 2*requiredXP
-					});
-					
+					if (xp >= requiredXP) {
+						await client.updateMember(user, { 
+							level: ++level,
+							xp: 0,
+							requiredXP: 2*requiredXP
+						});
+						
 
-					if (channelLevelUp.enabled) {
-						let id = channelLevelUp.id;
-						channel = message.guild.channels.cache.get(id);
+						if (levelUp.enabled) {
+							let id  = levelUp.channel;
+							channel = message.guild.channels.cache.get(id);
 
-						// if (sysXPConfig.message.enabled == true) {
-						// 	channel.send(sysXPConfig.message.text);
-						// } else {
-							channel.send(`Parabéns ${message.author} você subiu para o level **${level}**! \`${xp}/${requiredXP}|${xpTotal}\``)
-						// }
+							msg     = levelUp.message
+							msg     = await client.changeParams(msg, false, message.member);
+
+							channel.send(msg);
+						} else {
+							message.channel.send(`Parabéns ${message.author} você subiu para o level **${level}**! \`#${db.member.rank}\``);							
+						}
 					} else {
-						message.channel.send(`Parabéns ${message.author} você subiu para o level **${level}**! \`${xp}/${requiredXP}|${xpTotal}\``)
+						await client.updateMember(user, {
+							xp: ++xp,
+							xpTotal: ++xpTotal
+						});
 					}
-				} else {
-					await client.updateMember(user, {
-						xp: ++xp,
-						xpTotal: ++xpTotal
+				}
+				// Script alterar a posição de todos os usuários.
+				let resp = await db.members.sort(function(a,b) {
+		      return a.xpTotal > b.xpTotal ? -1 : a.xpTotal < b.xpTotal ? 1 : 0;
+		    });
+
+		    for (let i in resp) {
+		    	let position = i;
+		    	let users = message.guild.members.cache.find(m => m.id == resp[i].id).user;
+
+	        await client.updateMember(users, {
+						rank: ++position
 					});
 				}
-			}
-
-			let resp = await db.members.sort(function(a,b) {
-	      return a.xpTotal > b.xpTotal ? -1 : a.xpTotal < b.xpTotal ? 1 : 0;
-	    });
-
-	    for (let i in resp) {
-	    	let position = i;
-	    	let users = message.guild.members.cache.find(m => m.id == resp[i].id).user;
-
-        await client.updateMember(users, {
-					rank: ++position
-				});
+				
+				cooldown.add(message.author.id)
+				setTimeout(() => { cooldown.delete(message.author.id) }, 120000)
 			}
 		}
 	}
@@ -148,6 +155,13 @@ module.exports = async (client, message) => {
 	  })
 	}
 
+	if (message.content == '<@!' + client.user.id + '>') {
+	  client.fieldsEmbed(client.user.username, '', [
+			{ name: 'Prefixo', value: db.guild.prefix },
+			{ name: 'Links', value: `[Invite](https://discord.com/api/oauth2/authorize?client_id=${client.user.id}&permissions=268758208)\nWebSite(Em desenvolvimento` }
+		], client.user)
+	}
+
   let prefix;
 
 	try {
@@ -155,14 +169,7 @@ module.exports = async (client, message) => {
 	} catch(e) {
 		prefix = 'k!';
 	}
-
-	if (message.content == '<@!' + client.user.id + '>') {
-	  client.fieldsEmbed(client.user.username, '', [
-			{ name: 'Prefixo', value: db.guild.prefix },
-			{ name: 'Links', value: `[Invite](https://discord.com/api/oauth2/authorize?client_id=${client.user.id}&permissions=268758208)\nWebSite(Em desenvolvimento` }
-		], client.user)
-	}
-  
+	  
   if (message.content.indexOf(prefix) !== 0) return
 
   let args = message.content.slice(prefix.length).trim().split(/ +/g);
@@ -172,7 +179,7 @@ module.exports = async (client, message) => {
 
   if (!cmd) return
 	
-  if (message.author.id != 683703998729027769 ) return message.reply('Em fase de desenvolvimento.').then((msg) => { msg.delete({ timeout: 5000 }) });
+  if (db.member.tester == false && db.member.developer == false) return message.reply('Em fase de desenvolvimento.').then((msg) => { msg.delete({ timeout: 5000 }) });
 
   let cmds = db.member.cmdsExecutados;
 

@@ -9,7 +9,7 @@ module.exports = {
 			channels: {
 				welcome: {
 					enabled: false,
-					channel: '123456789123456789',
+					channel: 'Null',
 					message: {
 						enabled: false,
 						value: ''
@@ -40,7 +40,7 @@ module.exports = {
 				},
 				leave: {
 					enabled: false,
-					channel: '123456789123456789',
+					channel: 'Null',
 					message: {
 						enabled: false,
 						value: ''
@@ -69,21 +69,29 @@ module.exports = {
 						}
 					}
 				},
+				levelUp: {
+					enabled: false,
+					channel: 'Null',
+					message: 'Parabéns {member} você subiu para o level **{member.level}**! `#{member.rank}`'
+				},
 				logs: {
 					enabled: false,
-					channel: '123456789123456789'
+					channel: 'Null'
 				},
 				punishment:  {
 					enabled: false,
-					channel: '123456789123456789',
+					channel: 'Null',
 					ban: {
-						message: 'Mensagem de ban.'
+						message: 'O Usuario **{user.tag}** foi banido do servidor!'
 					},
 					mute: {
-						message: 'Mensagem de mute.'
+						message: 'O Usuario {user} foi silenciado!'
 					},
 					warn: {
-						message: 'Mensagem de warn.'
+						message: 'O Usuario {user} foi alertado!'
+					},
+					kick: {
+						message: 'O Usuario **{user.tag}** foi expulso!'
 					}
 				}
 			}

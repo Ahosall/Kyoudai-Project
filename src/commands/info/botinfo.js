@@ -3,10 +3,6 @@ const os       =  require('os');
 const osu      =  require('node-os-utils')
 
 module.exports = {
-  /**
-    * Primeiro o metodo run(client, message, args) será executado pelo nosso arquivo message.js
-    * Que passará os argumentos atraves do middleware que programamos.
-    */
   run: function (client, message, args, db) {
     let cpu       =  process.cpuUsage()    
     let cpuU      =  cpu.user.toString()[0] + cpu.user.toString()[1]    
@@ -17,8 +13,7 @@ module.exports = {
     let date      =  client.user.createdAt;
     let servsize  =  client.guilds.cache.size;
     let usersize  =  client.users.cache.size;
-   
-    // <:mongoDB:777933616915283978> <:nodeJs:777933616788406304> <:javascript:777933616172367892> <:discordJs:777935566367883334> <:hashtag:777939982731051009> <:terminal:777939086883029012> <:host_web:777939086525595728> <:rimuru:777945606571294750>
+
     const embed = new Discord.MessageEmbed()
       .setColor(0x03ffea)
       .setThumbnail(avatar)
@@ -27,17 +22,17 @@ module.exports = {
       .addFields([
         { 
           name: "Informações Discord", 
-          value: `**Servidores:** ${servsize}\n **Usuários:** ${usersize}\n **Canais:** ${client.channels.cache.size}`,
+          value: `**Membros:** \`${usersize}\`\n **Canais:** \`${client.channels.cache.size}\``,
           inline: true
         },
         { 
           name: "Servidor", 
-          value: `<:terminal:777939086883029012> **Comandos: **${client.commands.size}\n :pencil: **Prefixo nesse servidor: ** ${db.guild.prefix}`,
+          value: `<:terminal:777939086883029012> **Comandos: **\`${client.commands.size}\`\n :pencil: **Prefixo nesse servidor: ** \`${db.guild.prefix}\``,
           inline: true
         },
         { 
           name: "Links",
-          value: `[Me adicione](https://discord.com/api/oauth2/authorize?client_id=${process.env.WEB_CLIENT_ID}&permissions=8&scope=bot)\n[Meu Website](https://hyouka-web.glitch.me)`,
+          value: `[Me adicione](https://discord.com/api/oauth2/authorize?client_id=${process.env.WEB_CLIENT_ID}&permissions=8&scope=bot)\n[Meu Website](Em desenvolvimento)`,
           inline: true
         },
         { 
@@ -57,14 +52,7 @@ module.exports = {
     
     message.channel.send(embed);
   },
-  /**
-    * Aqui podemos colocar mais algumas configurações do comando.
-    */
   conf: {},
-
-  /**
-    * Aqui exportamos ajuda do comando como o seu nome categoria, descrição, etc...
-    */
  get help () {
     return {
       name: 'botinfo',

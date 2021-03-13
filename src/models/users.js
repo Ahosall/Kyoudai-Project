@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema({
     tag: {
         type: String,
     },
-    discordTag: {
+    discriminator: {
         type: String,
     },
     avatar: {

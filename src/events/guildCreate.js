@@ -6,13 +6,13 @@ module.exports = async (client, guild) => {
 
 	console.log(`| ${chalk.yellow('LOG')} | ${client.user.username} Joined ${guild.name} (${guild.id})`)
 
-  	if (!guildDb) {
-     	await client.createGuild({
-     		guildId: guild.id,
-	        guildName: guild.name,
+  if (!guildDb) {
+    await client.createGuild({
+ 			guildId: guild.id,
+      guildName: guild.name,
 
-	        ownerName: guild.members.cache.find(m => m.id == guild.ownerID).user.username,
-	        ownerId: guild.ownerID,
-        });
+      ownerName: guild.members.cache.find(m => m.id == guild.ownerID).user.username,
+      ownerId: guild.ownerID
+    });
 	}
 }

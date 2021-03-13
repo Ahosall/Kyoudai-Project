@@ -1,8 +1,10 @@
 const Discord = require('discord.js');
 
+const cmds = require('../../utils/cmdConfig.json');
+
 module.exports = {
-  run: async (client, message, args) => {
-    if (message.atuhor.id != message.author.id != 683703998729027769) return message.reply('Você não tem permissão para usar este comando ...');
+  run: async (client, message, args, db) => {
+    message.channel.send('Desativado...')
   },
   conf: {},
   get help() {

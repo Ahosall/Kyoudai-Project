@@ -14,7 +14,7 @@ const GuildConfig = new mongoose.Schema({
   prefix: {
     type: String,
     required: true,
-    default: "k."
+    default: "k!"
   },
   config: {
     sysXP: {
@@ -83,6 +83,11 @@ const GuildConfig = new mongoose.Schema({
                 }
             }
         },
+        levelUp: {
+            enabled: Boolean,
+            channel: String,
+            message: String
+        },
         logs: {
             enabled: Boolean,
             channel: String
@@ -97,6 +102,9 @@ const GuildConfig = new mongoose.Schema({
                 message: String
             },
             warn: {
+                message: String
+            },
+            kick: {
                 message: String
             }
         }

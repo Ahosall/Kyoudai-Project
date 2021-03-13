@@ -1,0 +1,31 @@
+  <!-- Navbar · Begin -->
+  <nav id="navigationBar" class="flex flex-row items-center justify-between p-6 bg-sweetBlack">
+
+    <div class="left flex flex-row items-center ml-10 md:ml-20 text-white">
+      <img src="images/botLogo.png" width="48px" height="48px" class="mr-2 hidden md:inline pointer-events-none noselect" />
+      <a href="/" class="mx-4 text-xl hover:text-blurple">Ínicio</a>
+      <a href="/commands" class="mx-4 text-xl hover:text-blurple hidden md:inline">Comandos</a>
+      <% if (data.user) { %>
+      <a href="/dashboard" class="mx-4 text-xl hover:text-blurple">Dashboard</a>
+      <% } %>
+      <a href="/invite" class="mx-4 text-xl hover:text-blurple hidden md:inline">Convidar</a>
+    </div>
+
+    <div class="right mr-10 md:mr-20">
+    <% if (data.user) { %>
+    
+      <a class="nav-link" href="/user">
+          <img class="rounded-circle" src="https://cdn.discordapp.com/avatars/<%= data.user.userId %>/<%= data.user.avatar %>" alt="<%= data.user.username %>" width="40px" height="40px" style="max-width: none !important;">
+      </a>    
+    <% } else { %>
+      <!-- <a href="/auth" target="_blank" class="px-8 py-3 whitespace-no-wrap bg-blurple text-white rounded-lg text-xl font-semibold hover:bg-beautyPurple">
+        <i class="fab fa-discord mr-1"></i>Login
+      </a> -->
+      <a class="nav-link" href="/user">
+          <img class="rounded-circle" src="https://cdn.discordapp.com/avatars/784800412770238504/daeb4ffe2c6c07ca4728e5ea7edb0dda" alt="Teste" width="40px" height="40px" style="max-width: none !important;">
+      </a>    
+    <% } %>
+    <div class="right mr-10 md:mr-20">
+
+  </nav>
+  <!-- Navbar · End -->

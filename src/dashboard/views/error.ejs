@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Error · Kyoudai Project</title>
+</head>
+<body>
+	<div class="heading">
+	  <h1 class="display-5 title">Erro <%= error.status %></h1>
+	  <p class="subtitle">
+	  	<%= error.message %>	    	
+	  </p>
+	  <p class="subtitle" id="message">
+	  	Aguarde você será redirecionado em <code>10</code> segundos para a pagina inicial.
+	  </p>
+	  <br><br><br><br>
+	</div>
+
+	<%- include('components/footer') -%>
+	<script>
+		let count = 10;
+
+		function start() {
+			return count = count - 1
+		}
+
+		setInterval(() => {
+			if(count > 0) {
+				console.log(count)
+				document.getElementById('message').innerHTML = `Aguarde você será redirecionado em <code>${count}</code> segundos para a pagina inicial.`
+				start()
+			} else {
+				return window.location.href = "/"	
+			}
+		}, 1000);
+
+	</script>
+</body>
+</html>

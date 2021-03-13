@@ -12,10 +12,12 @@ module.exports = async (client) => {
     */
 
   let status = [
+    /*{ name: 'Yeeeey!!! Primeiro teste do Kyoudai Bot oficial!'},
+      { name: 'Sendo desenvolvido desde "21/01/2021"'},*/
+
     { name: `Mencione para ver o meu prefixo.`, type: 'LISTENING' },
-    { name: `${client.users.cache.size} Humanos em ${client.guilds.cache.size} servidores.`, type: 'LISTENING' },
-    { name: `Em desenvolvimento.`, type: 'WATCHING' },
-    { name: 'Me adicione em seu servidor usando o comando de invite ou apenas me mencionando.  =D', type: 'PLAYING' }
+    { name: `${client.users.cache.size} humanos em ${client.channels.cache.size} canais.`, type: 'LISTENING' }
+    //{ name: `Em desenvolvimento.`, type: 'WATCHING' }
   ]
 
   function setStatus(){

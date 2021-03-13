@@ -4,7 +4,7 @@ module.exports = {
   run: async (client, message, args, db) => {
 
     let resp = await db.members.sort(function(a,b) {
-      return a.xpTotal > b.xpTotal ? -1 : a.xpTotal < b.xpTotal ? 1 : 0;
+      return a.rank > b.rank ? 0 : a.rank < b.rank ? 1 : -1;
     });
     
     let place;
@@ -12,15 +12,15 @@ module.exports = {
     let embed = new Discord.MessageEmbed()
       .setColor('RANDOM')
       .setTimestamp()
-      .setThumbnail(message.guild.iconURL({ format: 'png', dynamic: true }))
+      .setThumbnail(message.guild.iconURL({ dynamic: true }))
       .setAuthor(`RANK | ${message.guild.name}`, client.user.displayAvatarURL({ format: "png" }))
-      .addFields([])      
+      .addFields([])
 
     for (let i in resp) {
       let position = i
 
       embed.fields.push({ 
-        name: `**[${++position}]** \`${client.users.cache.get(resp[i].id).username}\``, 
+        name: `[**${++position}**] | ${client.users.cache.get(resp[i].id).username} | ||${resp[i].id}||`, 
         value: `Level: \`${resp[i].level}\`\nXP: \`${resp[i].xp}/${resp[i].requiredXP}\`\n XP Total: \`${resp[i].xpTotal}\`` 
       });
 
