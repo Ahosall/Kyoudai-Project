@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./src/utils/kyoudaiLogo-circle.png" alt="Kyoudai_Logo" width="170"/>
+  <img src="./src/assets/kyoudaiLogo-circle.png" alt="Kyoudai_Logo" width="170"/>
 </p>
 
 <h1 align="center">
