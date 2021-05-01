@@ -36,6 +36,9 @@ module.exports = {
 							enabled: false,
 							image: '{user.avatar}'
 						}
+					},
+					image: {
+						enabled: false
 					}
 				},
 				leave: {
@@ -67,6 +70,9 @@ module.exports = {
 							enabled: false,
 							image: '{user.avatar}'
 						}
+					},
+					image: {
+						enabled: false
 					}
 				},
 				levelUp: {

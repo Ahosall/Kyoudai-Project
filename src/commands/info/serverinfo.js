@@ -16,7 +16,21 @@ module.exports = {
          imgServer = message.guild.iconURL({ dynamic: true })
         moderation = verifyLevels[message.guild.verificationLevel]
      membersServer = message.guild.members.cache.size
-        dateServer = message.channel.guild.createdAt
+
+        dayCreateServer = formatDate('DD', message.channel.guild.createdAt)
+        mesCreateServer = formatDate('MM', message.channel.guild.createdAt)
+        anoCreateServer = formatDate('YYYY', message.channel.guild.createdAt)
+
+           dayNow = formatDate('DD', Date.now())
+           mesNow = formatDate('MM', Date.now())
+           anoNow = formatDate('YYYY', Date.now())
+
+           dayToDay = dayNow - dayCreateServer
+           mesToMes = mesNow - mesCreateServer
+           anoToAno = anoNow - anoCreateServer
+
+           dateServer = `${anoToAno} anos ${mesToMes} meses e ${dayToDay} dias`;
+
          categorys = message.guild.channels.cache.filter(channel => channel.type == 'category').size
           channels = message.guild.channels.cache.size
              voice = message.guild.channels.cache.filter(channel => channel.type == 'voice').size
@@ -39,7 +53,7 @@ module.exports = {
       { name: 'Texto', value: `\`${channels}\``, inline: true },
       
       { name: 'É necessário...', value: `${moderation} para fazer parte deste SV.`, inline: false },
-      { name: 'Data de nascimento do SV.', value:  formatDate('`DD/MM/YYYY` ás `HH:MM:ss`', dateServer) }
+      { name: 'O server possui...', value: dateServer }
     ], false, message.guild)
   },
   conf: {},

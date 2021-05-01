@@ -84,11 +84,11 @@ console.log(`\nAll events have been ${chalk.green('LOADED')}!`);
 
 db.start('DEV').then(() => console.log(`\n[ ${chalk.green('OK')} ] Connected to MongoDB in DEV`))
   .catch((err) => { console.log(`| ${chalk.red('ERR')} |`, err) });
- 
+/* 
 try {
   require('./dashboard/utils/server');
 } catch (err) {
   console.log(`| ${chalk.red('ERR')} |`, err)
-}
+}*/
 
 client.login(process.env.AUTH_TOKEN_TEST)

@@ -12,8 +12,8 @@ module.exports = async (client) => {
     */
 
   let status = [
-    /*{ name: 'Yeeeey!!! Primeiro teste do Kyoudai Bot oficial!'},
-      { name: 'Sendo desenvolvido desde "21/01/2021"'},*/
+    /*{ name: 'Yeeeey!!! Primeiro teste do Kyoudai Bot oficial!'},*/
+      { name: 'Sendo desenvolvido desde "21/01/2021"'},
 
     { name: `Mencione para ver o meu prefixo.`, type: 'LISTENING' },
     { name: `${client.users.cache.size} humanos em ${client.channels.cache.size} canais.`, type: 'LISTENING' }

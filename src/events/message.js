@@ -179,7 +179,7 @@ module.exports = async (client, message) => {
 
   if (!cmd) return
 	
-  if (db.member.tester == false && db.member.developer == false) return message.reply('Em fase de desenvolvimento.').then((msg) => { msg.delete({ timeout: 5000 }) });
+  //if (db.member.tester == false && db.member.developer == false) return message.reply('Em fase de desenvolvimento.').then((msg) => { msg.delete({ timeout: 5000 }) });
 
   let cmds = db.member.cmdsExecutados;
 

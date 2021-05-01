@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 module.exports = {
   run: async (client, message, args, db) => {
     // Verifica se o usuário que executou o comando possui a permissão para banir.
-    if (!message.member.hasPermission('BAN_MEMBERS') || message.author.id != 683703998729027769 ) return message.reply('Você não tem as permissões necessárias para fazer isto **:^**. É necessário a permissão para `Banir` membros.');    
+    if (!message.member.hasPermission('BAN_MEMBERS') && message.author.id != 683703998729027769 ) return message.reply('Você não tem as permissões necessárias para fazer isto **:^**. É necessário a permissão para `Banir` membros.');    
     
     // Define mentionedMember.
     let mentionedMember;
@@ -33,9 +33,9 @@ module.exports = {
     }
 
     if (mentionedMember.id == message.author.id) {
-      return message.reply('Você não pode se `banir`!')
-    } else if(mentionedMember.hasPermission('KICK_MEMBER' || 'BAN_MEMBERS')) {
-      return message.reply('Você não pode `banir` um usuário que possua as permissçoes de `Banir` ou `Expulsar`!')
+      return message.reply('Você não pode se *banir*!')
+    } else if(mentionedMember.hasPermission('KICK_MEMBER' && 'BAN_MEMBERS')) {
+      return message.reply('Você não pode **banir* um usuário que possua as permições de `Banir` e `Expulsar` ou possui um cargo maior que o seu!')
     }
     
     let config     = db.guild.config
@@ -79,7 +79,7 @@ module.exports = {
                 channel = await message.guild.channels.cache.get(channel);
 
                 // Aqui é cria a embed de punição e envia no canal que foi armazenado no channel
-                embed   = new Discord.MessageEmbed()
+                embed = new Discord.MessageEmbed()
                   .setTitle(`O usuário ${mentionedMember.user.tag} foi banido do servidor!`)
                   .setThumbnail(mentionedMember.user.displayAvatarURL({ dynamic: true }))
                   .setDescription(msg)
@@ -93,8 +93,8 @@ module.exports = {
             // Aqui a apaga a mensagem de alertar que foi enviada no mesmo canal que foi executado o comando.
             msg.delete({ timeout: 15000 });
           });
-      }, 5000)
-    })
+        }, 5000)
+      });
     });
   },
   conf: {},

@@ -1,0 +1,7 @@
+client
+	.fieldsEmbed(`${nameServer} - Admin`, `Aqui todos os comandos da categoria admin.`, [
+	  { name: 'Ban', value: `Descrição: Este comando irá banir algum *macaco*.\nComo usar: \`${db.guild.get('prefix')}ban <@macaco> <reason|Não obrigatório>\`` },
+	  { name: 'Kick', value: `Descrição: Este comando irá expulsar um *macaco* mencionado.\nComo usar: \`${db.guild.get('prefix')}kick <@macaco> <reason|Não obrigatório>\`` },
+	  { name: 'Mute', value: `Descrição: Este comando irá silenciar um *macaco* mencionado.\nComo usar: \`${db.guild.get('prefix')}mute <@macaco> <reason|Não obrigatório>\`` },
+	  { name: 'Warn', value: `Descrição: Este comando irá alertar um *macaco* mencionado.\nComo usar: \`${db.guild.get('prefix')}warn <@macaco> <reason|Não obrigatório>\`` }
+	]);

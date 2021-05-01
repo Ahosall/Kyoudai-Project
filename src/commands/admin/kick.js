@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 module.exports = {
   run: async (client, message, args, db) => {
     // Verifica se o usuário que executou o comando possui a permissão para expulsar.
-    if (!message.member.hasPermission('KICK_MEMBERS') || message.author.id != 683703998729027769 ) return message.reply('Você não tem as permissões necessárias para fazer isto **:^**. É necessário a permissão para `Expulsar` membros.')
+    if (!message.member.hasPermission('KICK_MEMBERS') && message.author.id != 683703998729027769 ) return message.reply('Você não tem as permissões necessárias para fazer isto **:^**. É necessário a permissão para `Expulsar` membros.')
 
     // Define mentionedMember.
     let mentionedMember;

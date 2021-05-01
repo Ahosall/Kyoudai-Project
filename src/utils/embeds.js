@@ -36,7 +36,7 @@ module.exports = (client, message) => {
     }
 
     /* Embed com title, description, fields, e author */
-    client.fieldsEmbed = function(title, description, fields, user, guild) {
+    client.fieldsEmbed = function(title, description, fields, image) {
         let embed = new MessageEmbed()
             .setTitle(`${title}`)
             .setDescription(`${description}`)
@@ -45,10 +45,12 @@ module.exports = (client, message) => {
             .setFooter(`Executado por ${message.author.username}`, message.author.displayAvatarURL({ dynamic: true }))
             .setTimestamp()
 
-            if (user) {
-                embed.setThumbnail(user.displayAvatarURL({ dynamic: true }))
-            } else if(guild) {
-                embed.setThumbnail(guild.iconURL({ dynamic: true }))
+            if (image) {
+              try {
+                embed.setThumbnail(image.displayAvatarURL({ dynamic: true }));
+              } catch {
+                embed.setThumbnail(image.iconURL({ dynamic: true }));
+              }                
             }
 
         message.channel.send(embed)

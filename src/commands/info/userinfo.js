@@ -45,7 +45,7 @@ module.exports = {
         game   = mentionedMember.presence.activities.filter(stts => stts.type == "PLAYING")[0]
         music  = mentionedMember.presence.activities.filter(stts => stts.type == "LISTENING")[0]
         status = mentionedMember.presence.activities.filter(stts => stts.type == "CUSTOM_STATUS")[0]
-    
+        
     if (game) {
       stateData = {
         name: 'Jogando...',
@@ -59,11 +59,11 @@ module.exports = {
     } else {
       stateData = {
         name: 'Hmmm...',
-        value: 'Este usuário não está jogando nada ...'
+        value: 'Este usuário não está jogando/ouvindo nada ...'
       }
     }
     
-    if (status != undefined) {
+    /*if (status != undefined) {
       let verifyStatus = {
         "dnd": "Não pertube.",
         "idle": "Tomando um café.",
@@ -72,11 +72,13 @@ module.exports = {
       }
       
       status = verifyStatus[status];      
-    } else if(status) {
+    } else */
+    if(status) {
       status = status.state
     } else {
       status = 'Ele não definiu nada no seu status.'
     }
+
 
     client.fieldsEmbed(mentionedMember.user.tag, descriptionEmbed, [
       { 

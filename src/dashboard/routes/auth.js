@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const client = require('../../app');
+const client = require('../utils/karma');
 
 /* |=======================================|
  * |               ROUTE · "/"             |

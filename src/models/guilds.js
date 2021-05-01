@@ -50,6 +50,9 @@ const GuildConfig = new mongoose.Schema({
                     enabled: Boolean,
                     image: String
                 }
+            },
+            image: {
+                enabled: Boolean
             }
         },
         leave: {
@@ -81,7 +84,10 @@ const GuildConfig = new mongoose.Schema({
                     enabled: Boolean,
                     image: String
                 }
-            }
+            },
+            image: {
+                enabled: Boolean
+            }            
         },
         levelUp: {
             enabled: Boolean,
